@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pacientes</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .container { max-width: 600px; margin: 40px auto; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #f0f0f0; }
+    button { margin: 10px; padding: 10px 20px; }
+    form { margin-bottom: 30px; }
+    input { padding: 8px; margin: 5px; width: calc(100% - 22px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Clients list</h1>
+
+    <!-- Formulario para crear nuevo paciente -->
+    <form id="createclientForm">
+      <input type="text" name="identification" placeholder="identification" required />
+      <input type="text" name="client_name" placeholder="fullname" required />
+      <input type="text" name="address" placeholder="address" required />
+      <input type="tel" name="phone" placeholder="phone" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Create client</button>
+    </form>
+    <form id="DeleteClient">
+      <input type="text" name="identification" placeholder="identification" required />
+      <button type="submit">Delete</button>
+    </form>
+    <form id="editClient">
+      <input type="text" name="identification" placeholder="identification" required />
+      <input type="text" name="client_name" placeholder="fullname" required />
+      <input type="text" name="address" placeholder="address" required />
+      <input type="tel" name="phone" placeholder="phone" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Edit client</button>
+    </form>
+
+    <button onclick="getAll()">Recharge</button>
+    <button onclick="window.location.href='../index.html'">Volver</button>
+    <div id="msg"></div>
+    <table id="clientsTable" style="display:none;">
+      <thead>
+        <tr>
+        <td>identification</td>
+        <td>name</td>
+        <td>address</td>
+        <td>phone</td>
+        <td>mail</td>
+        <td><button onclick="cl">Delete</button></td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script src="../public/clients.js"></script>
+</body>
+</html>
