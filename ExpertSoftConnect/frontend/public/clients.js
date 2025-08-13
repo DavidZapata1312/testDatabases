@@ -26,7 +26,7 @@ async function getAll() {
         <td>${p.client_name}</td>
         <td>${p.address}</td>
         <td>${p.phone}</td>
-        <td>${p.mail}</td>
+        <td>${p.email}</td>
       </tr>
     `).join('');
 
@@ -70,7 +70,7 @@ formDelete.addEventListener('submit',async(e)=>{
     const formData = new FormData(formDelete);
     const clientData = Object.fromEntries(formData.entries());
     try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(`${API_URL}/${clientData.identification}`,{
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(clientData),
@@ -95,7 +95,7 @@ formEdit.addEventListener('submit', async (e) => {
   const clientData = Object.fromEntries(formData.entries());
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(`${API_URL}/${clientData.identification}`,{
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(clientData),

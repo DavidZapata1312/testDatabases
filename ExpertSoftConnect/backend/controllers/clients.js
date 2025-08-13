@@ -13,7 +13,7 @@ async function getAllClients(req, res) {
 
 async function getClients(req, res) {
   try {
-    const clients = await db.query('SELECT * FROM clients WHERE client_id = ?', [req.params.id]);
+    const clients = await db.query('SELECT * FROM clients WHERE identification = ?', [req.params.id]);
     res.json(clients);
   } catch (error) {
     console.error('Error obteniendo pacientes:', error);
@@ -65,7 +65,7 @@ async function updateClients(req, res) {
     }
 
     query = query.slice(0, -2); // quitar la última coma y espacio
-    query += ' WHERE client_id = ?';
+    query += ' WHERE identification = ?';
     params.push(client_id);
 
     const result = await db.query(query, params);
@@ -86,7 +86,7 @@ async function deleteClients(req, res) {
   try {
     const { id } = req.params;
 
-    const result = await db.query('DELETE FROM clients WHERE client_id = ?', [id]);
+    const result = await db.query('DELETE FROM clients WHERE identification = ?', [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Client dont exist' });
