@@ -73,3 +73,15 @@ ORDER BY
 LIMIT 0, 1000;  
 
 select * from clients;
+
+SELECT 
+    c.client_name,
+    b.bill_number,
+    t.amount_paid,
+    t.transaction_date,
+    t.payment_platform
+FROM transactions t
+JOIN clients c ON t.client_id = c.client_id
+JOIN bills b ON t.bill_id = b.bill_id
+WHERE t.payment_platform = 'Nequi'
+ORDER BY t.transaction_date DESC;
