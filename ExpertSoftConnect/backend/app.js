@@ -24,8 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-// endpoints
-
 
 app.use('/charge', chargeRoutes);
 app.use('/clients', clientsRoutes);

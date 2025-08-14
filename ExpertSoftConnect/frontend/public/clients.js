@@ -65,28 +65,30 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-formDelete.addEventListener('submit',async(e)=>{
-    e.preventDefault();
-    const formData = new FormData(formDelete);
-    const clientData = Object.fromEntries(formData.entries());
-    try {
-    const res = await fetch(`${API_URL}/${clientData.identification}`,{
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(clientData),
+formDelete.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(formDelete);
+  const clientData = Object.fromEntries(formData.entries());
+
+  try {
+    const res = await fetch(`${API_URL}/${clientData.identification}`, {
+      method: 'DELETE'
     });
-        if (!res.ok) {
+
+    if (!res.ok) {
       const error = await res.json();
-      throw new Error(error.message || 'Error in client delete');
+      throw new Error(error.message || 'Error deleting client');
     }
 
-    alert('Client succesfuly delete');
-    form.reset();
+    alert('Client successfully deleted');
+    formDelete.reset();
     getAll();
   } catch (error) {
     alert('Error: ' + error.message);
   }
 });
+
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -107,7 +109,7 @@ formEdit.addEventListener('submit', async (e) => {
     }
 
     alert('Client succesfuly edit');
-    form.reset();
+    formEdit.reset();
     getAll();
   } catch (error) {
     alert('Error: ' + error.message);

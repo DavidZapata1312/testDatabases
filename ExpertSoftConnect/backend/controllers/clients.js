@@ -45,10 +45,10 @@ async function createClients(req, res) {
 
 async function updateClients(req, res) {
   try {
-    const { client_id } = req.params;
-    const { client_name, client_email} = req.body;
+    const { identification } = req.params;
+    const { client_name, email} = req.body;
 
-    if (!client_name && !client_email ) {
+    if (!client_name && !email ) {
       return res.status(400).json({ message: 'actualice one date' });
     }
 
@@ -59,14 +59,14 @@ async function updateClients(req, res) {
       query += 'client_name = ?, ';
       params.push(client_name);
     }
-    if (client_email) {
-      query += 'client_email = ?, ';
-      params.push(client_email);
+    if (email) {
+      query += 'email = ?, ';
+      params.push(email);
     }
 
     query = query.slice(0, -2); // quitar la última coma y espacio
     query += ' WHERE identification = ?';
-    params.push(client_id);
+    params.push(identification);
 
     const result = await db.query(query, params);
 
@@ -84,25 +84,36 @@ async function updateClients(req, res) {
 
 async function deleteClients(req, res) {
   try {
-    const { id } = req.params;
+    const { identification } = req.params;
 
-    const result = await db.query('DELETE FROM clients WHERE identification = ?', [id]);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Client dont exist' });
+    if (!identification) {
+      return res.status(400).json({ message: 'Missing client identification' });
     }
 
-    res.json({ message: 'client delete' });
+    const result = await db.query(
+      'DELETE FROM clients WHERE identification = ?',
+      [identification]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Client does not exist' });
+    }
+
+    res.json({ message: 'Client deleted' });
   } catch (error) {
-    console.error('Error in cliente delete :', error);
-    res.status(500).json({ message: 'Error in database', details: error.message });
+    console.error('Error in cliente delete:', error);
+    res.status(500).json({
+      message: 'Error in database',
+      details: error.message
+    });
   }
 }
+
 
 module.exports = {
   getAllClients,
   getClients,
   createClients,
   updateClients,
-  deleteClients,
+  deleteClients
 };
